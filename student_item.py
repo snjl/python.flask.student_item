@@ -1,3 +1,4 @@
+
 from flask import Flask, request, flash, url_for, redirect, render_template
 from flask_sqlalchemy import SQLAlchemy
 
@@ -11,7 +12,7 @@ db = SQLAlchemy(app)
 
 
 class students(db.Model):
-    id = db.Column('student_id', db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     city = db.Column(db.String(50))
     addr = db.Column(db.String(200))
@@ -26,6 +27,8 @@ class students(db.Model):
 
 @app.route('/')
 def show_all():
+    # 创建数据表放在此处，放在main函数下不会运行
+    db.create_all()
     return render_template('show_all.html', students=students.query.all())
 
 
